@@ -11,14 +11,21 @@ export class AuthService {
 
   async signup(email: string, password: string) {
     const user = await this.userService.find({ email });
-    console.log(`user`, user);
-    if (user) {
-      throw new BadRequestException('User already exists');
-    }
+    if (user) throw new BadRequestException('User already exists');
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(password, salt, 64)) as Buffer;
     const result = `${salt}.${hash.toString('hex')}`;
     const newUser = await this.userService.create(email, result);
     return newUser;
+  }
+
+  async signin(email: string, password: string) {
+    const user = await this.userService.find({ email });
+    if (!user) throw new BadRequestException('Invalid credentials');
+    const [salt, hash] = user.password.split('.');
+    const result = (await scrypt(password, salt, 64)) as Buffer;
+    if (hash !== result.toString('hex'))
+      throw new BadRequestException('Invalid credentials');
+    return user;
   }
 }
