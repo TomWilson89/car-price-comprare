@@ -27,6 +27,9 @@ export class UsersService {
     if (email) {
       query['email'] = email;
     }
+    if (Object.keys(query).length === 0) {
+      return null;
+    }
     return this.usersRepository.findOne(query);
   }
 

@@ -25,6 +25,16 @@ export class UsersController {
     private readonly authService: AuthService,
   ) {}
 
+  @Get('me')
+  me(@Session() session: any) {
+    return this.usersService.find({ id: session.userId });
+  }
+
+  @Post('logout')
+  logout(@Session() session: any) {
+    session.userId = null;
+  }
+
   @Post('signup')
   async signup(
     @Body() { email, password }: CreateUserDto,
