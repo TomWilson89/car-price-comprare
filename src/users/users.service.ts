@@ -19,8 +19,15 @@ export class UsersService {
     return this.usersRepository.find({ email });
   }
 
-  async find(id: string) {
-    return this.usersRepository.findOne(id);
+  async find({ id, email }: Partial<User>) {
+    const query = {};
+    if (id) {
+      query['id'] = id;
+    }
+    if (email) {
+      query['email'] = email;
+    }
+    return this.usersRepository.findOne(query);
   }
 
   async update(id: string, attrs: Partial<User>) {
