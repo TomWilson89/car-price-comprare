@@ -9,7 +9,9 @@ import {
   Post,
   Query,
   Session,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
@@ -28,13 +30,10 @@ export class UsersController {
   ) {}
 
   @Get('me')
+  @UseGuards(AuthGuard)
   me(@CurrentUser() user: User) {
     return user;
   }
-  // @Get('me')
-  // me(@Session() session: any) {
-  //   return this.usersService.find({ id: session.userId });
-  // }
 
   @Post('logout')
   logout(@Session() session: any) {
