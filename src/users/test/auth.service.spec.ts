@@ -1,4 +1,5 @@
 import { Test } from '@nestjs/testing';
+import { datatype, internet, random } from 'faker';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { EncryptionService } from '../../helpers/encryption.service';
 import { AuthService } from '../auth.service';
@@ -31,7 +32,7 @@ describe('AuthService', () => {
       Promise.resolve({
         email,
         password,
-        id: '1',
+        id: datatype.uuid(),
       }),
     );
   });
@@ -41,34 +42,38 @@ describe('AuthService', () => {
   });
 
   describe('signup', () => {
+    const salt = random.word();
+    const hash = random.word();
+
     beforeEach(() => {
       mockUsersService.find.mockResolvedValue(null);
-      mockEncryptionService.encrypt.mockResolvedValue('salt.hash');
+      mockEncryptionService.encrypt.mockResolvedValue(`${salt}.${hash}`);
     });
 
-    test('should throw an error if email is already in use', async () => {
+    test('should throw an error userService.find returns a user', async () => {
       const user = {
-        id: 'any_id',
-        email: 'any@email.com',
-        password: 'any_password',
+        id: datatype.uuid(),
+        email: internet.email(),
+        password: internet.password(),
       };
       mockUsersService.find.mockResolvedValueOnce(user);
-      const promise = sut.signup('any@email.com', 'any_password');
+
+      const promise = sut.signup(internet.email(), internet.password());
 
       await expect(promise).rejects.toThrow('User already exists');
     });
 
     test('should create a new user with a salted and hashed password', async () => {
       const mockUser = {
-        email: 'any@email.com',
-        password: 'any_password',
+        email: internet.email(),
+        password: internet.password(),
       };
 
       const user = await sut.signup(mockUser.email, mockUser.password);
       const [salt, hash] = user.password.split('.');
 
-      expect(salt).toBe('salt');
-      expect(hash).toBe('hash');
+      expect(salt).toBe(salt);
+      expect(hash).toBe(hash);
       expect(user.email).toBe(user.email);
       expect(user.password).not.toBe(mockUser.password);
     });
@@ -76,9 +81,9 @@ describe('AuthService', () => {
 
   describe('signin', () => {
     const mockUser = {
-      email: 'any@email.com',
-      password: 'any_password',
-      id: '1',
+      email: internet.email(),
+      password: internet.password(),
+      id: datatype.uuid(),
     };
 
     beforeEach(() => {
@@ -86,10 +91,10 @@ describe('AuthService', () => {
       mockEncryptionService.compare.mockResolvedValue(true);
     });
 
-    test('should throw an error if invlaid email is provided', async () => {
+    test('should throw an error usersService.find returns no user', async () => {
       mockUsersService.find.mockResolvedValueOnce(null);
 
-      const promise = sut.signin('wrong@email.com', 'any_password');
+      const promise = sut.signin(internet.email(), internet.password());
 
       await expect(promise).rejects.toThrow('Invalid credentials');
     });
@@ -102,7 +107,7 @@ describe('AuthService', () => {
     });
 
     test('should return a user if valid credentials were provided', async () => {
-      const user = await sut.signin('wrong@email.com', 'any_password');
+      const user = await sut.signin(mockUser.email, mockUser.password);
 
       expect(user).toEqual(mockUser);
     });
