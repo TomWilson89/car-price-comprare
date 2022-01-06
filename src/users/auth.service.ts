@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { EncryptionService } from './encryption.service';
+import { EncryptionService } from '../helpers/encryption.service';
 import { UsersService } from './users.service';
 
 @Injectable()

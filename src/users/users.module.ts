@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EncryptionService } from '../helpers/encryption.service';
 import { AuthService } from './auth.service';
-import { EncryptionService } from './encryption.service';
 import { CurrentUserInterceptor } from './interceptor/current-user.interceptor';
 import { UsersController } from './users.controller';
 import { User } from './users.entity';

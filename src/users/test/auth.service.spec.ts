@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { mock, MockProxy } from 'jest-mock-extended';
+import { EncryptionService } from '../../helpers/encryption.service';
 import { AuthService } from '../auth.service';
-import { EncryptionService } from '../encryption.service';
 import { UsersService } from '../users.service';
 
 describe('AuthService', () => {
