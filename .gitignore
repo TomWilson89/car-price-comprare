@@ -40,6 +40,4 @@ lerna-debug.log*
 .env.*
 
 # Test db
-db.sqlite
-test.sqlite
 *.sqlite
