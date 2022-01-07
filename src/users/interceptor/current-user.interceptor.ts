@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '../users.service';
 
+// TRANSFORM INTO MIDDLEWARE TO BE APPLIED BEFORE GUARD
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
   constructor(private readonly usersService: UsersService) {}
