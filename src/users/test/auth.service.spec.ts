@@ -33,6 +33,8 @@ describe('AuthService', () => {
         email,
         password,
         id: datatype.uuid(),
+        admin: false,
+        reports: [],
       }),
     );
   });
@@ -55,6 +57,8 @@ describe('AuthService', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
       mockUsersService.find.mockResolvedValueOnce(user);
 
@@ -84,6 +88,8 @@ describe('AuthService', () => {
       email: internet.email(),
       password: internet.password(),
       id: datatype.uuid(),
+      admin: false,
+      reports: [],
     };
 
     beforeEach(() => {

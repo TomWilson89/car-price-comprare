@@ -8,11 +8,11 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { AdminGuard } from 'src/guards/admin.guard';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-import { User } from 'src/users/users.entity';
+import { AdminGuard } from '../guards/admin.guard';
 import { AuthGuard } from '../guards/auth.guard';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { User } from '../users/users.entity';
 import { ApprovedReportDto } from './dtos/approved-report.dto';
 import { CreateReportDto } from './dtos/create-report';
 import { GetEstimateDto } from './dtos/get-estimate.dto';

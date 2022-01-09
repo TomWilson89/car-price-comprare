@@ -40,6 +40,8 @@ describe('UsersController', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
       mockUsersService.list.mockResolvedValue([user]);
 
@@ -59,6 +61,8 @@ describe('UsersController', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
       mockUsersService.find.mockResolvedValue(mockUser);
 
@@ -84,6 +88,8 @@ describe('UsersController', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
       mockAuthService.signin.mockResolvedValue(mockUser);
 
@@ -102,6 +108,8 @@ describe('UsersController', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
       mockAuthService.signup.mockResolvedValue(mockUser);
 
@@ -129,6 +137,8 @@ describe('UsersController', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
 
       const user = sut.me(mockUser);
@@ -144,6 +154,8 @@ describe('UsersController', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
       mockUsersService.update.mockResolvedValue(mockUser);
 
@@ -160,6 +172,8 @@ describe('UsersController', () => {
         id: datatype.uuid(),
         email: internet.email(),
         password: internet.password(),
+        admin: false,
+        reports: [],
       };
       mockUsersService.remove.mockResolvedValue(mockUser);
 
