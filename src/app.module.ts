@@ -8,21 +8,23 @@ import { ReportsModule } from './reports/reports.module';
 import { UsersModule } from './users/users.module';
 import cookieSession = require('cookie-session');
 
+console.log(`process.env.NODE_ENV`, process.env.NODE_ENV);
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'sqlite',
-        database: configService.get<string>('DB_NAME'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
-      }),
-    }),
+    TypeOrmModule.forRoot(),
+    // TypeOrmModule.forRootAsync({
+    //   inject: [ConfigService],
+    //   useFactory: (configService: ConfigService) => ({
+    //     type: 'sqlite',
+    //     database: configService.get<string>('DB_NAME'),
+    //     entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    //     synchronize: true,
+    //   }),
+    // }),
 
     // TypeOrmModule.forRoot({
     //   type: 'sqlite',
