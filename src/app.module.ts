@@ -8,7 +8,6 @@ import { ReportsModule } from './reports/reports.module';
 import { UsersModule } from './users/users.module';
 import cookieSession = require('cookie-session');
 
-console.log(`process.env.NODE_ENV`, process.env.NODE_ENV);
 @Module({
   imports: [
     ConfigModule.forRoot({

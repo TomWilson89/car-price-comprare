@@ -1,5 +1,8 @@
 const dbConfig = {
   synchronize: false,
+  cli: {
+    migrationsDir: 'src/migrations',
+  },
 };
 
 switch (process.env.NODE_ENV) {
@@ -7,6 +10,7 @@ switch (process.env.NODE_ENV) {
     Object.assign(dbConfig, {
       type: 'sqlite',
       database: 'db.sqlite',
+      migrations: [`dist/src/migrations/**/*.js`],
       entities: [__dirname + '/**/*.entity.js'],
     });
     break;
@@ -15,7 +19,9 @@ switch (process.env.NODE_ENV) {
     Object.assign(dbConfig, {
       type: 'sqlite',
       database: 'test.sqlite',
-      entities: [__dirname + '**/*.entity.ts'],
+      migrations: [`src/migrations/**/*.ts`],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      migrationsRun: true,
     });
     break;
   case 'production':
